@@ -26,8 +26,7 @@ public class ClientService {
     @Transactional(readOnly = true)
     public Page<ClientDTO> findAll(Pageable pageable){
         Page<Client> result = repository.findAll(pageable);
-        return result.map(x -> new ClientDTO());
-
+        return result.map(x -> new ClientDTO(x));
     }
 
     @Transactional
@@ -46,7 +45,7 @@ public class ClientService {
             entity = repository.save(entity);
             return new ClientDTO(entity);
         } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Recurso não encontrado");
+            throw new ResourceNotFoundException("Cliente não encontrado");
         }
     }
 
@@ -54,7 +53,7 @@ public class ClientService {
     @Transactional
     public void delete(Long id) {
         if (!repository.existsById(id)) {
-            throw new ResourceNotFoundException("Recurso não encontrado");
+            throw new ResourceNotFoundException("Cliente não encontrado");
         }
         repository.deleteById(id);
     }
