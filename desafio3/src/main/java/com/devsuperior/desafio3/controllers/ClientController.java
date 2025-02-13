@@ -44,15 +44,17 @@ public class ClientController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<ClientDTO> findById(@PathVariable Long id, @Valid @RequestBody ClientDTO dto){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ClientDTO> update(@PathVariable Long id, @Valid @RequestBody ClientDTO dto) {
         dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id){
-        service.delete(id);
-        return ResponseEntity.noContent().build();
-    }
 
 }
